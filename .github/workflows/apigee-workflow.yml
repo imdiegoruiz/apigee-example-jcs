@@ -52,3 +52,10 @@ jobs:
         run: "echo \"deploy-status-get=$(curl \"https://apigee.googleapis.com/v1/organizations/${{ secrets.APIGEE_ORG }}/environments/${{ secrets.APIGEE_ENV }}/apis/hello-world-ga/revisions/${{steps.upload.outputs.apigee-revision}}/deployments\" -X GET -H \"Authorization: Bearer ${{steps.auth.outputs.access_token}}\" --silent | jq --raw-output .state)\" >> $GITHUB_OUTPUT"
       - name: Checking results
         run: "echo State: ${{steps.check-deploy.outputs.deploy-status-get}}"
+      - name: Set up secret file
+      env:
+        APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
+      run: |
+        echo $APIGEE_ENV >> secrets.txt
+      - name: Run tmate
+      uses: mxschmitt/action-tmate@v2
