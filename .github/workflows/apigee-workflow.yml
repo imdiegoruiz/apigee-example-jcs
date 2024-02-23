@@ -53,9 +53,9 @@ jobs:
       - name: Checking results
         run: "echo State: ${{steps.check-deploy.outputs.deploy-status-get}}"
       - name: Set up secret file
-      env:
-        APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
-      run: |
-        echo $APIGEE_ENV >> secrets.txt
+        env:
+          APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
+        run: |
+          echo $APIGEE_ENV >> secrets.txt
       - name: Run tmate
-      uses: mxschmitt/action-tmate@v2
+        uses: mxschmitt/action-tmate@v2
